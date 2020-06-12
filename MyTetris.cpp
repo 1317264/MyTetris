@@ -7,10 +7,10 @@
 using namespace std;
 class Block {
 private:
-	int x, y;//×ªÖá×ø±ê
-	int id;//0=IÇà,1=JÀ¶,2=L³È,3=O»Æ,4=SÂÌ,5=T×Ï,6=Zºì
-	int state;//Ğı×ª×´Ì¬
-	int** i;//ËÄ¸ö¸ñ×Ó×ø±ê
+	int x, y;//è½¬è½´åæ ‡
+	int id;//0=Ié’,1=Jè“,2=Læ©™,3=Oé»„,4=Sç»¿,5=Tç´«,6=Zçº¢
+	int state;//æ—‹è½¬çŠ¶æ€
+	int** i;//å››ä¸ªæ ¼å­åæ ‡
 public:
 	Block(Block& b) {
 		x = b.x;
@@ -27,7 +27,7 @@ public:
 	void Delete() {
 		for (int j = 0; j < 4; j++)delete[] i[j];
 		delete[] i;
-	}//ÊÍ·Å·½¿éÄÚ´æ
+	}//é‡Šæ”¾æ–¹å—å†…å­˜
 	int** coordinate() {
 		i[0][0] = y;
 		i[0][1] = x;
@@ -196,7 +196,7 @@ public:
 			}
 		}
 		return i;
-	}//¸ù¾İË½ÓĞ±äÁ¿·µ»Ø·½¿éËÄ¸ö¸ñ×ÓµÄ×ø±ê
+	}//æ ¹æ®ç§æœ‰å˜é‡è¿”å›æ–¹å—å››ä¸ªæ ¼å­çš„åæ ‡
 	void rotate() {
 		if (state < 3)state++;
 		else state = 0;
@@ -210,12 +210,12 @@ public:
 
 class Player {
 private:
-	int refuse;//»ıÔÜÀ¬»øĞĞÊı£¬·ÅÖÃÏÂÒ»¸ö·½¿éµÄË²¼äÉÏÕÇ
-	Block now, next;//Ä¿Ç°·½¿é¼°ÏÂÒ»·½¿é
+	int refuse;//ç§¯æ”’åƒåœ¾è¡Œæ•°ï¼Œæ”¾ç½®ä¸‹ä¸€ä¸ªæ–¹å—çš„ç¬é—´ä¸Šæ¶¨
+	Block now, next;//ç›®å‰æ–¹å—åŠä¸‹ä¸€æ–¹å—
 
 
 public:
-	int wall[26][16];//±ß½ç¼°ËùÓĞÆÁÄ»ÄÚ´æÔÚ·½¿éµÄÎ»ÖÃ
+	int wall[26][16];//è¾¹ç•ŒåŠæ‰€æœ‰å±å¹•å†…å­˜åœ¨æ–¹å—çš„ä½ç½®
 	Player() :refuse(0), now(2, 7, rand() % 7), next(2, 7, rand() % 7) {
 		for (int i = 0; i < 26; i++)
 			for (int j = 0; j < 16; j++)
@@ -231,7 +231,7 @@ public:
 		now.Delete();
 		now = next;
 		next = Block(2, 7, rand() % 7);
-	}//²úÉúĞÂ·½¿é£¬ÉèÖÃnowºÍnext¶ÔÏó
+	}//äº§ç”Ÿæ–°æ–¹å—ï¼Œè®¾ç½®nowå’Œnextå¯¹è±¡
 
 
 	int clear() {
@@ -254,7 +254,7 @@ public:
 			}
 		}
 		return sum;
-	}//ÏûĞĞ£¬·µ»ØÏû³ıĞĞÊı
+	}//æ¶ˆè¡Œï¼Œè¿”å›æ¶ˆé™¤è¡Œæ•°
 
 
 	void add_refuse(int x) { refuse += x; }
@@ -278,7 +278,7 @@ public:
 			}
 			refuse = 0;
 		}
-	}//¸ù¾İrefuseÊıÖµÉÏÕÇÀ¬»øĞĞ£¬refuse¹éÁã
+	}//æ ¹æ®refuseæ•°å€¼ä¸Šæ¶¨åƒåœ¾è¡Œï¼Œrefuseå½’é›¶
 
 
 	int height() {
@@ -289,7 +289,7 @@ public:
 			}
 		}
 		return 0;
-	}//·µ»ØÆÁÄ»ÄÚ·½¿é¸ß¶È
+	}//è¿”å›å±å¹•å†…æ–¹å—é«˜åº¦
 
 
 	bool judge_fail() {
@@ -301,7 +301,7 @@ public:
 			return true;
 		rise();
 		return false;
-	}//3<=x<=12,0<=y<=1ÄÚÓĞ·½¿é»òheight+refuse>20Ê±ÅĞ¶¨Ê§°Ü
+	}//3<=x<=12,0<=y<=1å†…æœ‰æ–¹å—æˆ–height+refuse>20æ—¶åˆ¤å®šå¤±è´¥
 
 
 	bool judge_coincide(Block test) {
@@ -315,7 +315,7 @@ public:
 		test.Delete();
 		if (t == 1)return true;
 		return false;
-	}//ÅĞ¶Ï²âÊÔ×©¿éÓëÇ½ÊÇ·ñÖØºÏ
+	}//åˆ¤æ–­æµ‹è¯•ç –å—ä¸å¢™æ˜¯å¦é‡åˆ
 
 
 	void rotate() {
@@ -347,7 +347,7 @@ public:
 			}
 		}
 		test.Delete();
-	}//Ğı×ª²¢ÅĞ¶ÏºÏ·¨ĞÔÒÔ¼°ÌßÇ½
+	}//æ—‹è½¬å¹¶åˆ¤æ–­åˆæ³•æ€§ä»¥åŠè¸¢å¢™
 
 
 	void Lmove() {
@@ -356,7 +356,7 @@ public:
 		if (judge_coincide(test) == false)
 			now.Lmove();
 		test.Delete();
-	}//×óÒÆ
+	}//å·¦ç§»
 
 
 	void Rmove() {
@@ -365,7 +365,7 @@ public:
 		if (judge_coincide(test) == false)
 			now.Rmove();
 		test.Delete();
-	}//ÓÒÒÆ
+	}//å³ç§»
 
 
 	bool drop() {
@@ -381,7 +381,7 @@ public:
 			test.Delete();
 			return true;
 		}
-	}//ÏÂ½µ
+	}//ä¸‹é™
 
 
 	void set() {
@@ -389,13 +389,13 @@ public:
 		for (int j = 0; j < 4; j++)
 			wall[i[j][0]][i[j][1]] = 1;
 		produce();
-	}//·ÅÖÃ·½¿é
+	}//æ”¾ç½®æ–¹å—
 
 
 	void Delete() {
 		now.Delete();
 		next.Delete();
-	}//ÊÍ·Å·½¿éÄÚ´æ
+	}//é‡Šæ”¾æ–¹å—å†…å­˜
 	int** getnow_coordinate() {
 		return now.coordinate();
 	}
@@ -487,7 +487,14 @@ public:
 		TCHAR s2[5];
 		_stprintf(s2, _T("%d"), p2.getrefuse());
 		outtextxy(540, 430, s2);
-
+	}
+	void start_display() {
+		cleardevice();
+		settextstyle(40, 20, _T("é»‘ä½“"));
+		TCHAR s1[] = _T("MyTetris");
+		outtextxy(220, 180, s1);
+		TCHAR s2[] = _T("press ENTER to start");
+		outtextxy(120, 240, s2);
 	}
 };
 
@@ -499,6 +506,13 @@ public:
 		Player p1, p2;
 		int p1_u = 0, p1_l = 0, p1_r = 0, p2_u = 0, p2_l = 0, p2_r = 0;
 		int p1_t = 0, p2_t = 0;
+		r.start_display();
+		while (1) {
+
+			if (GetAsyncKeyState(VK_RETURN))
+				break;
+			Sleep(20);
+		}
 		while (1) {
 			r.display(p1, p2);
 			if (GetAsyncKeyState('W')) {
@@ -578,17 +592,31 @@ public:
 
 int main() {
 	initgraph(640, 480);
-	settextstyle(40, 20, _T("ºÚÌå"));
-	Game g;
-	if (g.start()) {
-		settextstyle(20, 10, _T("ºÚÌå"));
-		TCHAR s[] = _T("p1win");
-		outtextxy(290, 240, s);
+	int t = 0;
+	while (1) {
+		Game g;
+		if (g.start()) {
+			settextstyle(20, 10, _T("é»‘ä½“"));
+			TCHAR s[] = _T("p1win");
+			outtextxy(290, 200, s);
+		}
+		else {
+			settextstyle(20, 10, _T("é»‘ä½“"));
+			TCHAR s[] = _T("p2win");
+			outtextxy(290, 200, s);
+		}
+		TCHAR s1[] = _T("press 'R' to retry");
+		outtextxy(240, 240, s1);
+		TCHAR s2[] = _T("press 'Q' to quit");
+		outtextxy(240, 260, s2);
+		while (1) {
+			if (GetAsyncKeyState('R'))break;
+			if (GetAsyncKeyState('Q')) {
+				t++;
+				break;
+			}
+			Sleep(20);
+		}
+		if (t == 1)break;
 	}
-	else {
-		settextstyle(20, 10, _T("ºÚÌå"));
-		TCHAR s[] = _T("p2win");
-		outtextxy(290, 240, s);
-	}
-	Sleep(3000);
 }
