@@ -562,13 +562,7 @@ public:
 			if (p1_t >= 50) {
 				p1_t -= 50;
 				if (p1.drop()) {
-					int x = p1.clear();
-					switch (x)
-					{
-					case 2:	p2.add_refuse(1); break;
-					case 3: p2.add_refuse(2); break;
-					case 4: p2.add_refuse(4); break;
-					}
+					p2.add_refuse(p1.clear());
 					if (p1.judge_fail()) {
 						p1.Delete();
 						p2.Delete();
@@ -580,13 +574,7 @@ public:
 			if (p2_t >= 50) {
 				p2_t -= 50;
 				if (p2.drop()) {
-					int x = p2.clear();
-					switch (x)
-					{
-					case 2:	p1.add_refuse(1); break;
-					case 3: p1.add_refuse(2); break;
-					case 4: p1.add_refuse(4); break;
-					}
+					p1.add_refuse(p2.clear());
 					if (p2.judge_fail()) {
 						p1.Delete();
 						p2.Delete();
