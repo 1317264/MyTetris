@@ -215,9 +215,9 @@ private:
 
 
 public:
-	int wall[26][16];//边界及所有屏幕内存在方块的位置
+	int wall[23][16];//边界及所有屏幕内存在方块的位置
 	Player() :refuse(0), now(2, 7, rand() % 7), next(2, 7, rand() % 7) {
-		for (int i = 0; i < 26; i++)
+		for (int i = 0; i < 23; i++)
 			for (int j = 0; j < 16; j++)
 				wall[i][j] = 0;
 		for (int i = 0; i < 23; i++)
@@ -487,6 +487,8 @@ public:
 		TCHAR s2[5];
 		_stprintf(s2, _T("%d"), p2.getrefuse());
 		outtextxy(540, 430, s2);
+		p1.Delete();
+		p2.Delete();
 	}
 	void start_display() {
 		cleardevice();
@@ -560,7 +562,13 @@ public:
 			if (p1_t >= 50) {
 				p1_t -= 50;
 				if (p1.drop()) {
-					p2.add_refuse(p1.clear());
+					int x = p1.clear();
+					switch (x)
+					{
+					case 2:	p2.add_refuse(1); break;
+					case 3: p2.add_refuse(2); break;
+					case 4: p2.add_refuse(4); break;
+					}
 					if (p1.judge_fail()) {
 						p1.Delete();
 						p2.Delete();
@@ -572,7 +580,13 @@ public:
 			if (p2_t >= 50) {
 				p2_t -= 50;
 				if (p2.drop()) {
-					p1.add_refuse(p2.clear());
+					int x = p2.clear();
+					switch (x)
+					{
+					case 2:	p1.add_refuse(1); break;
+					case 3: p1.add_refuse(2); break;
+					case 4: p1.add_refuse(4); break;
+					}
 					if (p2.judge_fail()) {
 						p1.Delete();
 						p2.Delete();
